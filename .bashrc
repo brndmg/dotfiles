@@ -91,15 +91,16 @@ if [ "$PS1" ]; then
         fi
       fi
     fi
-    case $TERM in
-	xterm*)
+
+    case "$TERM" in
+    xterm* )
 		if [ -e /etc/sysconfig/bash-prompt-xterm ]; then
 			PROMPT_COMMAND=/etc/sysconfig/bash-prompt-xterm
 		else
 	    	PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
 		fi
 		;;
-	screen)
+	screen )
 		if [ -e /etc/sysconfig/bash-prompt-screen ]; then
 			PROMPT_COMMAND=/etc/sysconfig/bash-prompt-screen
 		else
@@ -162,7 +163,7 @@ shopt -s histappend
 
 # Make prompt informative
 # See:  http://www.ukuug.org/events/linux2003/papers/bash_tips/
-PS1="\[\033[0;34m\][\u@\h:\w]$\[\033[0m\]"
+PS1="\[\033[1;32m\][\u@\h:\w]$\[\033[0m\]"
 
 ## -----------------------
 ## -- 2) Set up aliases --
