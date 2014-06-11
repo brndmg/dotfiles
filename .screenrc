@@ -25,6 +25,7 @@ startup_message       off             # default: on
 vbell                 off             # default: ???
 escape	"^Tt"                         # ctrl-A default interferes with emacs keybindings for terminal
 defutf8 on                            # unicode by default
+utf8 on
 defscrollback         10000           # default: 100
 silencewait           15              # default: 30
 activity              "activity in %n (%t) [%w:%s]~"
