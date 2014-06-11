@@ -1,7 +1,13 @@
 
 export GIT_PROMPT_END=" ${White} $ ${ResetColor}"
-source ~/.bash-git-prompt/gitprompt.sh
-source /home/matts/.rvm/scripts/rvm
-
+source ~/.git-bash-prompt/gitprompt.sh
+source $HOME/.rvm/scripts/rvm
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+alias roa='~/dev/code/setup_scripts/run_on_each.sh'
+
+#search bash eternal history
+function eh() {    
+    grep -h "$1" $HOME/.bash_eternal_history | awk -F$"\t" '{ print $6 }'
+}
