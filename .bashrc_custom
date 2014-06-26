@@ -1,7 +1,8 @@
 
 export GIT_PROMPT_END=" ${White} $ ${ResetColor}"
-source ~/.git-bash-prompt/gitprompt.sh
-source $HOME/.rvm/scripts/rvm
+source ~/.bash-git-prompt/gitprompt.sh
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
