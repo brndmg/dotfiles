@@ -94,7 +94,7 @@ Return a list of installed packages or nil for every package not installed."
          nil)))
    packages))
 
-(ensure-package-installed 'iedit 'magit 'flycheck) ;  --> (nil nil) if iedit and magit are already installed
+(ensure-package-installed 'iedit 'magit 'flycheck 'skewer-mode 'tern 'tern-auto-complete) ;  --> (nil nil) if iedit and magit are already installed
 
 ;; activate installed packages
 (package-initialize)

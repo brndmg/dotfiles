@@ -11,19 +11,17 @@
 ;; js2-mode
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 (add-hook 'js-mode-hook 'js2-minor-mode)
-(add-hook 'js2-mode-hook 'ac-js2-mode)
+;;(add-hook 'js2-mode-hook 'ac-js2-mode)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
-; ;;; Required packages
-; ;;; everytime emacs starts, it will automatically check if those packages are
-; ;;; missing, it will install them automatically
-; (when (not package-archive-contents)
-;   (package-refresh-contents))
-; (defvar tmtxt/packages
-;   '(package1 package2 package3 package4 package5))
-; (dolist (p tmtxt/packages)
-;   (when (not (package-installed-p p))
-;     (package-install p)))
+
+;;(setq ac-js2-evaluate-calls t)
+
+(add-hook 'js-mode-hook (lambda () (tern-mode t)))
+(eval-after-load 'tern
+   '(progn
+      (require 'tern-auto-complete)
+      (tern-ac-setup)))
 
 
 ;; Configure jshint for JS style checking.
@@ -52,6 +50,7 @@
                                 (let ((file buffer-file-name)) (concat jshint-cli file)))
                            (set (make-local-variable 'compilation-read-command) nil)
                            (local-set-key "\C-c\C-u" 'whitespace-clean-and-compile)
+                           (auto-complete-mode 1)
                            ))
 
 (defun node-repl-comint-preoutput-filter (output)
