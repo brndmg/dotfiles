@@ -66,6 +66,39 @@
 (global-set-key "\M-h" 'backward-delete-word)
 (global-set-key "\M-u" 'zap-to-char)
 
+
+;; Matt custom
+(global-auto-revert-mode t)
+(normal-erase-is-backspace-mode 0)
+
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+;; activate installed packages
+(package-initialize)
+
+;;; Required packages
+;;; everytime emacs starts, it will automatically check if those packages are
+;;; missing, it will install them automatically
+(defun ensure-package-installed (&rest packages)
+  "Assure every package is installed, ask for installation if it’s not.
+Return a list of installed packages or nil for every package not installed."
+  (mapcar
+   (lambda (package)
+     (package-installed-p 'evil)
+     (if (package-installed-p package)
+         package
+       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
+           (package-install package)
+         nil)))
+   packages))
+
+(ensure-package-installed 'iedit 'magit 'flycheck) ;  --> (nil nil) if iedit and magit are already installed
+
+;; activate installed packages
+(package-initialize)
+
 ;; ---------------------------
 ;; -- JS Mode configuration --
 ;; ---------------------------
@@ -75,7 +108,3 @@
 (require 'jade-mode)    
 (add-to-list 'auto-mode-alist '("\\.styl$" . sws-mode))
 (add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
-
-;; Matt custom
-(global-auto-revert-mode t)
-(normal-erase-is-backspace-mode 0)

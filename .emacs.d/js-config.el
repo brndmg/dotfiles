@@ -8,6 +8,24 @@
   (whitespace-cleanup-all)
   (compile compile-command))
 
+;; js2-mode
+(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+(add-hook 'js-mode-hook 'js2-minor-mode)
+(add-hook 'js2-mode-hook 'ac-js2-mode)
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
+; ;;; Required packages
+; ;;; everytime emacs starts, it will automatically check if those packages are
+; ;;; missing, it will install them automatically
+; (when (not package-archive-contents)
+;   (package-refresh-contents))
+; (defvar tmtxt/packages
+;   '(package1 package2 package3 package4 package5))
+; (dolist (p tmtxt/packages)
+;   (when (not (package-installed-p p))
+;     (package-install p)))
+
+
 ;; Configure jshint for JS style checking.
 ;;   - Install: $ npm install -g jshint
 ;;   - Usage: Hit C-cC-u within any emacs buffer visiting a .js file
@@ -69,7 +87,8 @@
        (replace-regexp-in-string
         "\\[0K" ""
         (replace-regexp-in-string
-         "" "" output))))))))
+         "
+" "" output))))))))
       )
     output
   )
