@@ -1,14 +1,56 @@
-
+#!/usr/bin/env python
 export GIT_PROMPT_END=" ${White} $ ${ResetColor}"
-source ~/.bash-git-prompt/gitprompt.sh
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+if [ ! -d ~/.bash-git-prompt/ ]; then
+   source ~/.git-bash-prompt/gitprompt.sh
+fi
 
+if [ -f ~/.git-completion.bash ]; then
+   source ~/.git-completion.bash
+fi
+
+if [ -d ~/.rvm ]; then
+   PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+fi
+
+#JAVA
+export JAVA_HOME=~/dev/lib/jdk1.7.0_51
+export PATH=${JAVA_HOME}/bin:$PATH
+
+#aliases
 alias roa='~/dev/code/setup_scripts/run_on_each.sh'
+alias open='nautilus'
+alias dev='cd $HOME/dev/code $1'
 
 #search bash eternal history
 function eh() {    
     grep -h "$1" $HOME/.bash_eternal_history | awk -F$"\t" '{ print $6 }'
 }
+
+#which commit has this blob
+function wchtb() {
+    obj_name="$1"
+    shift
+    git log "$@" --pretty=format:'%T %h %s' \
+      | while read tree commit subject ; do
+    if git ls-tree -r $tree | grep -q "$obj_name" ; then
+        echo $commit "$subject"
+    fi
+    done
+}
+
+function subl() {
+   sublime $1 &
+}
+
+function watch(){
+while true; do
+  change=$(inotifywait -r -e close_write,moved_to,create .)
+  change=${change#./ * }
+  echo "$change"
+  if [[ "$change" == *.py ]]; then /usr/bin/env python -m unittest discover tests/; fi
+done
+}
+
